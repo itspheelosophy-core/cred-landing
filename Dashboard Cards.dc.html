@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Syne:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</helmet>
+<div style="display:flex;justify-content:center;align-items:flex-start;gap:18px;flex-wrap:wrap;font-family:'Archivo',sans-serif">
+
+  <div style="width:300px;border-radius:18px;background:rgba(20,29,45,0.9);border:1px solid rgba(132,175,251,0.18);box-shadow:0 30px 60px -22px rgba(2,6,16,0.7);padding:18px 20px;animation:floaty 7s ease-in-out infinite">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#e9eef6">Latest Reports</span>
+      <span style="font-family:'Space Mono',monospace;font-size:10px;color:#6f8199">RECENT</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="width:30px;height:30px;border-radius:8px;background:#1f2a3c;flex:none;overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="icon-folder.png" alt="Golden Hour Edit" style="width:60%;height:60%;object-fit:cover;display:block;opacity:0.5"></span>
+        <div style="flex:1"><div style="font-weight:600;font-size:12px;color:#e3e9f2;text-align:left">Golden Hour Edit</div><div style="font-size:10px;color:#7f92aa;margin-top:2px;text-align:left">Petal &amp; Poise</div></div>
+        <span style="padding:3px 9px;border-radius:999px;background:rgba(46,204,113,0.18);color:#67e39b;font-size:10px;font-weight:600">Published</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="width:30px;height:30px;border-radius:8px;background:#1f2a3c;flex:none;overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="icon-folder.png" alt="Weekend Reset" style="width:60%;height:60%;object-fit:cover;display:block;opacity:0.5"></span>
+        <div style="flex:1"><div style="font-weight:600;font-size:12px;color:#e3e9f2;text-align:left">Weekend Reset</div><div style="font-size:10px;color:#7f92aa;margin-top:2px;text-align:left">Amble Active</div></div>
+        <span style="padding:3px 9px;border-radius:999px;background:rgba(132,175,251,0.16);color:#a8c4ff;font-size:10px;font-weight:600">Expires Oct 12</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="width:30px;height:30px;border-radius:8px;background:#1f2a3c;flex:none;overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="icon-folder.png" alt="Fresh Start Kit" style="width:60%;height:60%;object-fit:cover;display:block;opacity:0.5"></span>
+        <div style="flex:1"><div style="font-weight:600;font-size:12px;color:#e3e9f2;text-align:left">Fresh Start Kit</div><div style="font-size:10px;color:#7f92aa;margin-top:2px;text-align:left">Sundry Soda</div></div>
+        <span style="padding:3px 9px;border-radius:999px;background:rgba(255,255,255,0.08);color:#9fb0c4;font-size:10px;font-weight:600">Draft</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:360px;border-radius:18px;background:rgba(20,29,45,0.9);border:1px solid rgba(132,175,251,0.2);box-shadow:0 40px 80px -24px rgba(2,6,16,0.75);padding:20px 22px;animation:floaty 6s ease-in-out infinite 0.4s">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#f0f4fa">Performance Overview</span>
+      <span style="font-family:'Space Mono',monospace;font-size:10px;color:#6f8199">SYNCED 2m</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <div style="background:rgba(132,175,251,0.08);border:1px solid rgba(132,175,251,0.14);border-radius:11px;padding:12px 8px;text-align:center"><div style="font-size:20px;font-weight:800;color:#F4EEDC;letter-spacing:-0.02em">2.8K</div><div style="font-size:8px;letter-spacing:0.05em;color:#7f92aa;margin-top:3px">AUDIENCE</div></div>
+      <div style="background:rgba(132,175,251,0.08);border:1px solid rgba(132,175,251,0.14);border-radius:11px;padding:12px 8px;text-align:center"><div style="font-size:20px;font-weight:800;color:#84AFFB;letter-spacing:-0.02em">7.0%</div><div style="font-size:8px;letter-spacing:0.05em;color:#7f92aa;margin-top:3px">ENGAGE</div></div>
+      <div style="background:rgba(132,175,251,0.08);border:1px solid rgba(132,175,251,0.14);border-radius:11px;padding:12px 8px;text-align:center"><div style="font-size:20px;font-weight:800;color:#F4EEDC;letter-spacing:-0.02em">3.0K</div><div style="font-size:8px;letter-spacing:0.05em;color:#7f92aa;margin-top:3px">VIEWS</div></div>
+      <div style="background:rgba(255,102,72,0.1);border:1px solid rgba(255,102,72,0.2);border-radius:11px;padding:12px 8px;text-align:center"><div style="font-size:20px;font-weight:800;color:#FF8A6E;letter-spacing:-0.02em">1.8K</div><div style="font-size:8px;letter-spacing:0.05em;color:#7f92aa;margin-top:3px">REACH</div></div>
+    </div>
+  </div>
+
+  <div style="width:300px;border-radius:18px;background:rgba(22,32,50,0.92);border:1px solid rgba(132,175,251,0.24);box-shadow:0 50px 90px -26px rgba(2,6,16,0.8);padding:20px 22px;animation:floaty 6.5s ease-in-out infinite 0.9s">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#e9eef6">Products Tagged</span>
+      <span style="font-family:'Space Mono',monospace;font-size:10px;color:#6f8199">2 ITEMS</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:11px">
+        <span style="width:28px;height:28px;border-radius:7px;background:#1f2a3c;flex:none;overflow:hidden"><img src="lip-souffle.png" alt="Lip Soufflé Matte" style="width:100%;height:100%;object-fit:cover;display:block"></span>
+        <div style="flex:1"><div style="font-weight:600;font-size:12px;color:#e3e9f2;text-align:left">Lip Souffl&eacute; Matte</div></div>
+        <span style="font-size:11px;font-weight:700;color:#7f92aa">1/2</span>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(132,175,251,0.14);padding-top:13px">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#6f8199;margin-bottom:8px">HIGHLIGHTED COMMENTS</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:rgba(132,175,251,0.17);border-radius:10px;padding:9px 11px;display:flex;gap:9px;align-items:flex-start">
+          <span style="width:24px;height:24px;border-radius:50%;flex:none;overflow:hidden;background:#1f2a3c"><img src="uploads/Screenshot 6.png" alt="@maya.k" style="width:100%;height:100%;object-fit:cover;display:block"></span>
+          <div style="flex:1">
+            <div style="font-size:10px;color:#ffffff;line-height:1.4;text-align:left">"obsessed with this shade, ordering now"</div>
+            <div style="font-size:9px;color:#7f92aa;margin-top:4px;text-align:left">@maya.k · 128 likes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:380}}"></script>
+</body>
+</html>
