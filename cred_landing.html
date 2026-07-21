@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cred — Your campaign reporting studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#fff;color:#1a1a18;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.06);padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.logo-mark{width:26px;height:26px;background:#0F6E56;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.logo-name{font-size:14px;font-weight:700;color:#1a1a18;letter-spacing:-0.3px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13px;color:#5F5E5A;text-decoration:none;transition:color 0.15s}
+.nav-links a:hover{color:#1a1a18}
+.nav-cta{display:flex;gap:8px;align-items:center}
+.btn-nav-ghost{padding:7px 16px;border-radius:7px;font-size:13px;color:#1a1a18;text-decoration:none;border:1px solid rgba(0,0,0,0.12);background:#fff;cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif}
+.btn-nav-ghost:hover{background:#f5f5f3}
+.btn-nav-primary{padding:7px 16px;border-radius:7px;font-size:13px;color:#fff;text-decoration:none;background:#0F6E56;border:none;cursor:pointer;font-weight:500;transition:background 0.15s;font-family:'Inter',sans-serif}
+.btn-nav-primary:hover{background:#085041}
+
+.hero{padding-top:56px;background:linear-gradient(180deg,#c8e8f5 0%,#a8d8ee 30%,#e8f4f9 70%,#fff 100%);min-height:620px;position:relative;overflow:hidden;text-align:center}
+.hero-inner{padding:80px 48px 60px;position:relative;z-index:2}
+.hero-eyebrow{font-size:11px;color:#1a1a18;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;opacity:0.6}
+.hero h1{font-size:62px;font-weight:700;line-height:1.05;letter-spacing:-2px;color:#1a1a18;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:#0F6E56}
+.hero-sub{font-size:16px;color:rgba(26,26,24,0.6);line-height:1.6;max-width:480px;margin:0 auto 36px}
+.hero-actions{display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:14px}
+.btn-hero-primary{padding:12px 26px;border-radius:8px;font-size:14px;font-weight:500;background:#0F6E56;color:#fff;text-decoration:none;border:none;cursor:pointer;transition:background 0.15s;font-family:'Inter',sans-serif}
+.btn-hero-primary:hover{background:#085041}
+.btn-hero-ghost{padding:12px 26px;border-radius:8px;font-size:14px;color:#1a1a18;text-decoration:none;border:1px solid rgba(0,0,0,0.15);background:rgba(255,255,255,0.7);cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif}
+.btn-hero-ghost:hover{background:#fff}
+.hero-note{font-size:11px;color:rgba(26,26,24,0.4)}
+.hero-stars{font-size:12px;color:rgba(26,26,24,0.5);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px}
+.stars{color:#f59e0b;letter-spacing:1px}
+
+.hero-cards{display:flex;gap:12px;justify-content:center;align-items:flex-end;padding:40px 48px 0;position:relative;z-index:2}
+.hcard{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:16px;padding:18px;box-shadow:0 4px 24px rgba(0,0,0,0.08);min-width:200px}
+.hcard-sm{min-width:160px}
+.hcard-label{font-size:10px;color:#888780;font-weight:500;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+.hcard-big{font-size:32px;font-weight:700;color:#1a1a18;letter-spacing:-1px}
+.hcard-sub{font-size:11px;color:#888780;margin-top:4px}
+.hcard-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;margin-top:8px}
+.badge-g{background:#E1F5EE;color:#085041}
+.badge-b{background:#E6F1FB;color:#185FA5}
+.metric-row{display:flex;gap:8px;margin-top:10px}
+.metric-sm{flex:1;background:#f7f6f3;border-radius:8px;padding:8px;text-align:center}
+.metric-sm .v{font-size:15px;font-weight:600;color:#1a1a18}
+.metric-sm .l{font-size:9px;color:#888780;margin-top:2px}
+.sparkbar-row{display:flex;gap:2px;align-items:flex-end;height:32px;margin-top:10px}
+.sb{border-radius:2px;background:#d1ede6;flex:1}
+.sb.hi{background:#0F6E56}
+.plat-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.plat-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#5F5E5A}
+.pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+.logos-strip{padding:32px 0;border-top:1px solid rgba(0,0,0,0.06);border-bottom:1px solid rgba(0,0,0,0.06);overflow:hidden;background:#fff}
+.logos-label{text-align:center;font-size:11px;color:#b4b2a9;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+.logos-track{display:flex;width:max-content;animation:marquee 30s linear infinite}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.logo-chip{display:flex;align-items:center;gap:7px;padding:0 28px;font-size:13px;font-weight:500;color:#b4b2a9;white-space:nowrap;border-right:1px solid rgba(0,0,0,0.06)}
+.logo-chip span{color:#d1d0cc;font-size:14px}
+
+.about{padding:100px 48px;max-width:1200px;margin:0 auto}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.section-eyebrow{font-size:11px;color:#0F6E56;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.about-left h2{font-size:48px;font-weight:700;letter-spacing:-1.5px;line-height:1.1;color:#1a1a18}
+.about-left h2 em{font-style:normal;color:#0F6E56}
+.about-right{padding-top:8px}
+.about-right p{font-size:15px;color:#5F5E5A;line-height:1.7;margin-bottom:20px}
+.stat-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.stat-card{background:#f7f6f3;border-radius:14px;padding:20px}
+.stat-card .num{font-size:36px;font-weight:700;color:#1a1a18;letter-spacing:-1px}
+.stat-card .num span{color:#0F6E56}
+.stat-card .desc{font-size:12px;color:#888780;margin-top:6px;line-height:1.5}
+.about-img-card{background:#f7f6f3;border-radius:20px;padding:24px;margin-top:32px;border:1px solid rgba(0,0,0,0.06)}
+.about-img-inner{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.about-avatar{width:44px;height:44px;border-radius:50%;background:#d1ede6;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#0F6E56}
+.about-quote{font-size:13px;color:#5F5E5A;line-height:1.6;font-style:italic}
+
+.services{padding:0 48px 100px;max-width:1200px;margin:0 auto}
+.services-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px}
+.services-header h2{font-size:40px;font-weight:700;letter-spacing:-1.2px;line-height:1.1;max-width:480px}
+.services-header p{font-size:14px;color:#5F5E5A;max-width:280px;line-height:1.6;padding-bottom:4px}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.svc-card{border:1px solid rgba(0,0,0,0.08);border-radius:16px;padding:28px;transition:box-shadow 0.2s;cursor:pointer}
+.svc-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.svc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:16px}
+.si-teal{background:#E1F5EE}
+.si-blue{background:#E6F1FB}
+.si-amber{background:#FAEEDA}
+.svc-card h3{font-size:16px;font-weight:600;color:#1a1a18;margin-bottom:8px;letter-spacing:-0.3px}
+.svc-card p{font-size:13px;color:#888780;line-height:1.6}
+.svc-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#0F6E56;font-weight:500;margin-top:16px;text-decoration:none}
+
+.expertise{padding:0 48px 100px;max-width:1200px;margin:0 auto}
+.expertise-header{margin-bottom:40px}
+.expertise-header h2{font-size:40px;font-weight:700;letter-spacing:-1.2px;max-width:540px;line-height:1.15}
+.expertise-header p{font-size:14px;color:#5F5E5A;max-width:440px;margin-top:12px;line-height:1.6}
+.bento-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.bcard{background:#f7f6f3;border-radius:20px;padding:28px;overflow:hidden;position:relative;border:1px solid rgba(0,0,0,0.05)}
+.bcard h3{font-size:18px;font-weight:600;color:#1a1a18;margin-bottom:8px;letter-spacing:-0.3px}
+.bcard p{font-size:13px;color:#888780;line-height:1.6}
+.bcard-visual{margin-top:20px}
+.mini-card{background:#fff;border-radius:12px;padding:16px;border:1px solid rgba(0,0,0,0.07);box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.mini-label{font-size:10px;color:#888780;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.mini-big{font-size:28px;font-weight:700;color:#1a1a18;letter-spacing:-0.8px}
+.mini-sub{font-size:11px;color:#888780;margin-top:4px}
+.progress-bar{height:6px;background:#e8e6e1;border-radius:3px;margin-top:12px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:#0F6E56}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500}
+.t1{background:#FBEAF0;color:#72243E}
+.t2{background:#EEEDFE;color:#3C3489}
+.t3{background:#E1F5EE;color:#085041}
+.t4{background:#FAEEDA;color:#633806}
+.t5{background:#E6F1FB;color:#0C447C}
+.t6{background:#EAF3DE;color:#27500A}
+.growth-row{display:flex;gap:8px;margin-top:12px}
+.growth-item{flex:1;background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid rgba(0,0,0,0.07)}
+.growth-item .g-val{font-size:20px;font-weight:700;color:#1a1a18}
+.growth-item .g-delta{font-size:10px;color:#0F6E56;font-weight:500;margin-top:2px}
+.growth-item .g-label{font-size:10px;color:#888780;margin-top:2px}
+.url-row{display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:10px 14px;margin-top:14px;border:1px solid rgba(0,0,0,0.07)}
+.url-dot{width:6px;height:6px;border-radius:50%;background:#0F6E56}
+.url-text{font-size:11px;color:#888780;font-family:monospace}
+
+.pricing{padding:0 48px 100px;max-width:1100px;margin:0 auto;text-align:center}
+.pricing-header h2{font-size:40px;font-weight:700;letter-spacing:-1.2px;color:#1a1a18;margin-bottom:10px}
+.pricing-header p{font-size:14px;color:#888780;margin-bottom:48px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:left}
+.p-card{border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:28px;position:relative;background:#fff}
+.p-card.featured{background:#0F6E56;border-color:#0F6E56}
+.p-popular{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#1a1a18;color:#fff;font-size:10px;font-weight:600;padding:3px 14px;border-radius:20px;white-space:nowrap}
+.p-tier{font-size:11px;color:#888780;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.p-card.featured .p-tier{color:rgba(255,255,255,0.65)}
+.p-price{font-size:42px;font-weight:700;color:#1a1a18;letter-spacing:-1.5px;margin-bottom:6px}
+.p-card.featured .p-price{color:#fff}
+.p-price sub{font-size:14px;font-weight:400;color:#888780;vertical-align:baseline}
+.p-card.featured .p-price sub{color:rgba(255,255,255,0.6)}
+.p-desc{font-size:13px;color:#888780;margin-bottom:20px;line-height:1.5}
+.p-card.featured .p-desc{color:rgba(255,255,255,0.7)}
+.p-divider{height:1px;background:rgba(0,0,0,0.07);margin-bottom:18px}
+.p-card.featured .p-divider{background:rgba(255,255,255,0.2)}
+.p-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.p-list li{font-size:13px;color:#5F5E5A;display:flex;align-items:center;gap:8px}
+.p-card.featured .p-list li{color:rgba(255,255,255,0.85)}
+.p-check{width:16px;height:16px;border-radius:50%;background:#E1F5EE;color:#0F6E56;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.p-card.featured .p-check{background:rgba(255,255,255,0.2);color:#fff}
+.btn-p{display:block;text-align:center;padding:11px;border-radius:10px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.15s;font-family:'Inter',sans-serif;cursor:pointer;border:none}
+.btn-p-dark{background:#1a1a18;color:#fff}
+.btn-p-dark:hover{background:#333}
+.btn-p-white{background:#fff;color:#0F6E56}
+.btn-p-white:hover{background:#E1F5EE}
+
+.testimonials{padding:0 48px 100px;max-width:1200px;margin:0 auto}
+.t-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px}
+.t-header h2{font-size:40px;font-weight:700;letter-spacing:-1.2px}
+.t-nav{display:flex;gap:8px}
+.t-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(0,0,0,0.1);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.15s}
+.t-btn:hover{background:#f7f6f3}
+.t-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.t-card{border:1px solid rgba(0,0,0,0.08);border-radius:16px;padding:24px;background:#fff}
+.t-img{width:40px;height:40px;border-radius:50%;background:#f7f6f3;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#888780;margin-bottom:12px}
+.t-card-logo{width:60px;height:20px;background:#f7f6f3;border-radius:4px;margin-bottom:12px}
+.t-quote{font-size:13px;color:#5F5E5A;line-height:1.65;margin-bottom:16px}
+.t-name{font-size:12px;font-weight:600;color:#1a1a18}
+.t-role{font-size:11px;color:#b4b2a9;margin-top:2px}
+
+.cta-section{padding:0 48px 100px;max-width:1200px;margin:0 auto}
+.cta-inner{background:linear-gradient(135deg,#0a5540 0%,#0F6E56 50%,#1a8a6a 100%);border-radius:24px;padding:80px 60px;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center}
+.cta-left h2{font-size:42px;font-weight:700;letter-spacing:-1.2px;color:#fff;line-height:1.15;margin-bottom:12px}
+.cta-left p{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.6}
+.cta-right{display:flex;flex-direction:column;gap:10px;align-items:flex-start;min-width:220px}
+.btn-cta-white{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;background:#fff;color:#0F6E56;text-decoration:none;transition:background 0.15s;text-align:center;white-space:nowrap}
+.btn-cta-white:hover{background:#E1F5EE}
+.btn-cta-outline{padding:13px 28px;border-radius:10px;font-size:14px;color:rgba(255,255,255,0.75);text-decoration:none;border:1px solid rgba(255,255,255,0.25);transition:all 0.15s;text-align:center;white-space:nowrap}
+.btn-cta-outline:hover{border-color:rgba(255,255,255,0.5);color:#fff}
+.cta-trusted{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px}
+
+footer{background:#1a1a18;padding:60px 48px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:48px}
+.footer-logo-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.footer-logo-mark{width:26px;height:26px;background:#0F6E56;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.footer-logo-name{font-size:14px;font-weight:700;color:#f0ede8}
+.footer-desc{font-size:13px;color:rgba(240,237,232,0.35);line-height:1.65;max-width:240px;margin-bottom:20px}
+.f-newsletter{display:flex;gap:8px}
+.f-input{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 14px;font-size:12px;color:#f0ede8;font-family:'Inter',sans-serif;outline:none}
+.f-input::placeholder{color:rgba(240,237,232,0.3)}
+.f-submit{padding:9px 14px;border-radius:8px;background:#0F6E56;color:#fff;font-size:12px;font-weight:500;border:none;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif}
+.footer-col h4{font-size:11px;font-weight:500;color:rgba(240,237,232,0.3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;font-size:13px;color:rgba(240,237,232,0.45);text-decoration:none;margin-bottom:10px;transition:color 0.15s}
+.footer-col a:hover{color:#f0ede8}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(255,255,255,0.07)}
+.footer-bottom p{font-size:12px;color:rgba(240,237,232,0.2)}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{font-size:12px;color:rgba(240,237,232,0.25);text-decoration:none;transition:color 0.15s}
+.footer-legal a:hover{color:rgba(240,237,232,0.6)}
+
+@media(max-width:900px){
+  .hero h1{font-size:40px}
+  .hero-cards{flex-wrap:wrap}
+  .about-inner,.bento-grid{grid-template-columns:1fr}
+  .services-grid,.pricing-grid,.t-grid{grid-template-columns:1fr}
+  .cta-inner{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  nav,.hero-inner,.about,.services,.expertise,.pricing,.testimonials,.cta-section{padding-left:24px;padding-right:24px}
+  footer{padding:60px 24px 40px}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="logo-mark">C</div>
+    <span class="logo-name">Cred</span>
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Reviews</a>
+  </div>
+  <div class="nav-cta">
+    <a href="/login" class="btn-nav-ghost">Log in</a>
+    <a href="/login" class="btn-nav-primary">Get started →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">· Built for creators ·</div>
+    <h1>Pull your <em>Cred.</em><br>Send the receipts.</h1>
+    <p class="hero-sub">The campaign reporting studio that syncs your analytics, builds verified reports, and sends brands the receipts — automatically.</p>
+    <div class="hero-actions">
+      <a href="/login" class="btn-hero-primary">Get started free</a>
+      <a href="#features" class="btn-hero-ghost">View demo</a>
+    </div>
+    <p class="hero-note">Free plan available · No credit card required</p>
+    <div class="hero-stars">
+      <span class="stars">★★★★★</span>
+      Rated 4.9/5 by 1,200+ creators
+    </div>
+  </div>
+  <div class="hero-cards">
+    <div class="hcard hcard-sm">
+      <div class="hcard-label">Total audience</div>
+      <div class="hcard-big">445K</div>
+      <div class="hcard-sub">Across 4 platforms</div>
+      <div class="hcard-badge badge-g">▲ +2.3% this month</div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Campaign metrics</div>
+      <div class="metric-row">
+        <div class="metric-sm"><div class="v">2.1M</div><div class="l">Impressions</div></div>
+        <div class="metric-sm"><div class="v">8.4%</div><div class="l">Eng. rate</div></div>
+        <div class="metric-sm"><div class="v">892K</div><div class="l">Reach</div></div>
+      </div>
+      <div class="sparkbar-row">
+        <div class="sb" style="height:35%"></div>
+        <div class="sb" style="height:50%"></div>
+        <div class="sb" style="height:40%"></div>
+        <div class="sb" style="height:65%"></div>
+        <div class="sb" style="height:55%"></div>
+        <div class="sb hi" style="height:80%"></div>
+        <div class="sb hi" style="height:100%"></div>
+        <div class="sb hi" style="height:90%"></div>
+      </div>
+    </div>
+    <div class="hcard hcard-sm">
+      <div class="hcard-label">Connected</div>
+      <div class="plat-list">
+        <div class="plat-item"><span class="pdot" style="background:#D4537E"></span>Instagram · 210K</div>
+        <div class="plat-item"><span class="pdot" style="background:#444"></span>TikTok · 178K</div>
+        <div class="plat-item"><span class="pdot" style="background:#E24B4A"></span>YouTube · 42K</div>
+        <div class="plat-item"><span class="pdot" style="background:#185FA5"></span>LinkedIn · 15K</div>
+      </div>
+    </div>
+    <div class="hcard hcard-sm">
+      <div class="hcard-label">Report status</div>
+      <div class="hcard-big" style="font-size:20px;margin-top:4px">Summer Glow</div>
+      <div class="hcard-sub">x Glossier</div>
+      <div class="hcard-badge badge-g" style="margin-top:8px">● Live</div>
+      <div class="hcard-badge badge-b" style="margin-top:6px">● Viewed 3×</div>
+    </div>
+  </div>
+</section>
+
+<div class="logos-strip">
+  <p class="logos-label">Syncs with your platforms</p>
+  <div class="logos-track">
+    <div class="logo-chip"><span>●</span> Instagram</div>
+    <div class="logo-chip"><span>●</span> TikTok</div>
+    <div class="logo-chip"><span>●</span> YouTube</div>
+    <div class="logo-chip"><span>●</span> LinkedIn</div>
+    <div class="logo-chip"><span>●</span> Pinterest</div>
+    <div class="logo-chip"><span>●</span> Threads</div>
+    <div class="logo-chip"><span>●</span> LTK</div>
+    <div class="logo-chip"><span>●</span> Amazon Storefront</div>
+    <div class="logo-chip"><span>●</span> Instagram</div>
+    <div class="logo-chip"><span>●</span> TikTok</div>
+    <div class="logo-chip"><span>●</span> YouTube</div>
+    <div class="logo-chip"><span>●</span> LinkedIn</div>
+    <div class="logo-chip"><span>●</span> Pinterest</div>
+    <div class="logo-chip"><span>●</span> Threads</div>
+    <div class="logo-chip"><span>●</span> LTK</div>
+    <div class="logo-chip"><span>●</span> Amazon Storefront</div>
+  </div>
+</div>
+
+<section class="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <div class="section-eyebrow">About Cred</div>
+      <h2>A reporting studio<br><em>dedicated to</em><br>creators who<br><em>deliver.</em></h2>
+    </div>
+    <div class="about-right">
+      <p>Creators deserve better than copy-pasting numbers into spreadsheets. Cred connects directly to your platforms, pulls your analytics automatically, and packages everything into a verified report brands actually trust.</p>
+      <p>Send your Cred. Show your proof. Get paid what you earned.</p>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="num">6<span>+</span></div>
+          <div class="desc">Platform integrations syncing live analytics automatically</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">100<span>%</span></div>
+          <div class="desc">Verified data pulled directly from platform APIs</div>
+        </div>
+      </div>
+      <div class="about-img-card">
+        <div class="about-img-inner">
+          <div class="about-avatar">JM</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:#1a1a18">Jasmine M.</div>
+            <div style="font-size:11px;color:#888780">Lifestyle creator · 280K followers</div>
+          </div>
+        </div>
+        <p class="about-quote">"Cred completely changed how I pitch for renewals. I send one link and brands can see everything."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="features">
+  <div class="services-header">
+    <h2>Comprehensive tools for<br>every campaign</h2>
+    <p>Whether you're managing one partnership or ten, Cred keeps every campaign organized and verified.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-icon si-teal">📊</div>
+      <h3>Live analytics sync</h3>
+      <p>Connect your platforms once. Cred pulls follower count, reach, impressions, and engagement rate automatically on every login.</p>
+      <a href="#" class="svc-link">Learn more →</a>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon si-blue">📋</div>
+      <h3>Campaign reports</h3>
+      <p>Add posts, sync metrics, tag products, and surface highlight comments. Publish and send a verified link to your brand partner.</p>
+      <a href="#" class="svc-link">Learn more →</a>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon si-amber">✅</div>
+      <h3>Verified metrics</h3>
+      <p>Every number is pulled directly from the platform API. No manual entry. Brands know exactly what they are looking at.</p>
+      <a href="#" class="svc-link">Learn more →</a>
+    </div>
+  </div>
+</section>
+
+<section class="expertise">
+  <div class="expertise-header">
+    <div class="section-eyebrow">Expertise</div>
+    <h2>Where creator data meets<br>brand trust</h2>
+    <p>Cred bridges the gap between what creators deliver and what brands need to see — giving both sides confidence in every partnership.</p>
+  </div>
+  <div class="bento-grid">
+    <div class="bcard">
+      <div class="section-eyebrow" style="margin-bottom:10px">Campaign overview</div>
+      <h3>Cumulative metrics that update automatically</h3>
+      <p>Every post you add rolls up into one campaign total. Impressions, reach, engagement, saves — always current, never manual.</p>
+      <div class="bcard-visual">
+        <div class="mini-card">
+          <div class="mini-label">Summer Glow Launch · Campaign totals</div>
+          <div class="growth-row">
+            <div class="growth-item"><div class="g-val">1.2M</div><div class="g-delta">↑ 14%</div><div class="g-label">Impressions</div></div>
+            <div class="growth-item"><div class="g-val">892K</div><div class="g-delta">↑ 8%</div><div class="g-label">Reach</div></div>
+            <div class="growth-item"><div class="g-val">8.4%</div><div class="g-delta">↑ 0.4%</div><div class="g-label">Eng. rate</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bcard">
+      <div class="section-eyebrow" style="margin-bottom:10px">Niche identity</div>
+      <h3>Your niches display on every report you send</h3>
+      <p>Select up to three. They appear on your creator profile and in every report header so brands understand your audience instantly.</p>
+      <div class="bcard-visual">
+        <div class="tag-row">
+          <span class="tag t1">Beauty</span>
+          <span class="tag t2">Fashion</span>
+          <span class="tag t3">Lifestyle</span>
+          <span class="tag t4">Wellness</span>
+          <span class="tag t5">Tech</span>
+          <span class="tag t6">Fitness</span>
+        </div>
+      </div>
+    </div>
+    <div class="bcard">
+      <div class="section-eyebrow" style="margin-bottom:10px">Monthly usage</div>
+      <h3>Track your report usage across billing cycles</h3>
+      <p>See exactly how many reports you have used this month and when your count resets. Upgrade anytime as you grow.</p>
+      <div class="bcard-visual">
+        <div class="mini-card">
+          <div class="mini-label">Reports this month</div>
+          <div class="mini-big">3 <span style="font-size:16px;font-weight:400;color:#888780">/ 10</span></div>
+          <div class="mini-sub">Resets July 1</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="bcard">
+      <div class="section-eyebrow" style="margin-bottom:10px">Shareable links</div>
+      <h3>A custom URL for every published report</h3>
+      <p>Publish your report and get a branded link. Send it to a brand, set an expiry, or password-protect it on Pro.</p>
+      <div class="bcard-visual">
+        <div class="url-row">
+          <span class="url-dot"></span>
+          <span class="url-text">cred.so/r/summer-glow-glossier</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <div class="section-eyebrow">Pricing</div>
+    <h2>Flexible plans for every creator</h2>
+    <p>Start free. Upgrade as your partnerships grow. No annual contracts.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="p-card">
+      <div class="p-tier">Free</div>
+      <div class="p-price">$0<sub>/mo</sub></div>
+      <div class="p-desc">For creators just getting started with brand reporting.</div>
+      <div class="p-divider"></div>
+      <ul class="p-list">
+        <li><span class="p-check">✓</span> 3 reports per month</li>
+        <li><span class="p-check">✓</span> 1 connected platform</li>
+        <li><span class="p-check">✓</span> Shareable report links</li>
+        <li><span class="p-check">✓</span> PDF download</li>
+        <li><span class="p-check">✓</span> Product tagging</li>
+      </ul>
+      <a href="/login" class="btn-p btn-p-dark">Get started free</a>
+    </div>
+    <div class="p-card featured">
+      <div class="p-popular">Most popular</div>
+      <div class="p-tier">Starter</div>
+      <div class="p-price">$19<sub>/mo</sub></div>
+      <div class="p-desc">For active creators managing multiple brand partnerships.</div>
+      <div class="p-divider"></div>
+      <ul class="p-list">
+        <li><span class="p-check">✓</span> 10 reports per month</li>
+        <li><span class="p-check">✓</span> All platform integrations</li>
+        <li><span class="p-check">✓</span> Custom report URL slug</li>
+        <li><span class="p-check">✓</span> Analytics screenshots</li>
+        <li><span class="p-check">✓</span> Highlight comments</li>
+        <li><span class="p-check">✓</span> Priority sync</li>
+      </ul>
+      <a href="/login" class="btn-p btn-p-white">Get started</a>
+    </div>
+    <div class="p-card">
+      <div class="p-tier">Pro</div>
+      <div class="p-price">$49<sub>/mo</sub></div>
+      <div class="p-desc">For full-time creators and agencies who need unlimited everything.</div>
+      <div class="p-divider"></div>
+      <ul class="p-list">
+        <li><span class="p-check">✓</span> Unlimited reports</li>
+        <li><span class="p-check">✓</span> Everything in Starter</li>
+        <li><span class="p-check">✓</span> Password-protected reports</li>
+        <li><span class="p-check">✓</span> Report expiration dates</li>
+        <li><span class="p-check">✓</span> Viewed indicator</li>
+        <li><span class="p-check">✓</span> Priority support</li>
+      </ul>
+      <a href="/login" class="btn-p btn-p-dark">Get started</a>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="t-header">
+    <div>
+      <div class="section-eyebrow">Testimonials</div>
+      <h2>What they say about Cred</h2>
+    </div>
+    <div class="t-nav">
+      <button class="t-btn">←</button>
+      <button class="t-btn">→</button>
+    </div>
+  </div>
+  <div class="t-grid">
+    <div class="t-card">
+      <div class="t-img">JM</div>
+      <div class="t-card-logo"></div>
+      <p class="t-quote">"Before Cred I was screenshotting analytics and pasting numbers into a Google Doc. Now I send one link and brands see everything."</p>
+      <div class="t-name">Jasmine M.</div>
+      <div class="t-role">Lifestyle creator · 280K followers</div>
+    </div>
+    <div class="t-card">
+      <div class="t-img">TK</div>
+      <div class="t-card-logo"></div>
+      <p class="t-quote">"The product tagging feature alone is worth it. Brands see exactly which products I featured without watching the whole video."</p>
+      <div class="t-name">Taylor K.</div>
+      <div class="t-role">Beauty creator · 145K followers</div>
+    </div>
+    <div class="t-card">
+      <div class="t-img">AL</div>
+      <div class="t-card-logo"></div>
+      <p class="t-quote">"I sent my first Cred report and the brand replied within an hour asking to renew. The verified metrics make all the difference."</p>
+      <div class="t-name">Alex L.</div>
+      <div class="t-role">Tech creator · 92K followers</div>
+    </div>
+    <div class="t-card">
+      <div class="t-img">RB</div>
+      <div class="t-card-logo"></div>
+      <p class="t-quote">"I send a link and Cred tells me when they viewed it. No more attaching PDFs to emails and hoping they open them."</p>
+      <div class="t-name">Riley B.</div>
+      <div class="t-role">Fitness creator · 320K followers</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <h2>We combine creator data<br>with brand trust</h2>
+      <p>Cred bridges the gap between what you deliver and what brands need to see — giving both sides confidence in every campaign partnership.</p>
+    </div>
+    <div class="cta-right">
+      <a href="/login" class="btn-cta-white">Get started free →</a>
+      <a href="#features" class="btn-cta-outline">See all features</a>
+      <span class="cta-trusted">Trusted by 1,200+ creators</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-row">
+          <div class="footer-logo-mark">C</div>
+          <span class="footer-logo-name">Cred</span>
+        </div>
+        <p class="footer-desc">The campaign reporting studio built for creators. Sync your analytics, build verified reports, and send brands your proof.</p>
+        <div class="f-newsletter">
+          <input class="f-input" type="email" placeholder="Subscribe to updates">
+          <button class="f-submit">Submit</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/login">Log in</a>
+        <a href="/login">Sign up</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about">About</a>
+        <a href="/blog">Blog</a>
+        <a href="mailto:hello@getcred.io">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy">Privacy policy</a>
+        <a href="/terms">Terms of service</a>
+        <a href="/cookies">Cookie policy</a>
+        <a href="/acceptable-use">Acceptable use</a>
+        <a href="/data-deletion">Data deletion</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Cred. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/cookies">Cookies</a>
+        <a href="/acceptable-use">Acceptable use</a>
+        <a href="/data-deletion">Data deletion</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
